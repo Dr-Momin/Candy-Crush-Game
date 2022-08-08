@@ -1,0 +1,360 @@
+/*Mimic Contain*/
+
+@font-face{
+	font-family: Guerrilla;
+	src: url(fonts/Guerrilla.ttf);
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 20px;
+}
+
+h1{
+    text-align: center;
+    margin: 20px;
+}
+
+.score{
+    text-align: center;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/*----Animations----*/
+
+/*Classes to be Manipulated*/
+.border{
+    border: 2px solid black;
+}
+
+.anime_ex{/*For Exclamations*/
+    animation: ex_anime 1s forwards;
+}
+
+@keyframes ex_anime{
+    
+    0%{ width: 2vw; height: auto; opacity: 1;}
+    100%{width: 80vw; height: auto; opacity: 0;}
+
+    /*
+    /*Transform scale not supported for Mobile devices
+    0%{ transform: scale(25%); opacity: 1;}
+    100%{transform: scale(100%); opacity: 0;}
+    */
+}
+
+.anime_sizedown{
+    animation: sizedown_anime 0.2s ease-out forwards;
+}
+
+@keyframes sizedown_anime{/*For Disappearing Matched Candies*/
+    from{background-size:75% 100%}
+    to {background-size: 20% 20%}
+}
+
+/*
+/*Transform: scale not supported for mobile devices
+.anime_down{
+    animation: down_anime 0.2s ease-out forwards;
+}
+
+@keyframes down_anime{
+    0%{transform: scale(100%);}
+    100%{transform: scale(20%);}
+}
+*/
+
+/*----Animations--End----*/
+
+
+/*----Loader----Animations------*/
+#loader-wrapper{
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 10;
+}
+
+#loader-bg{
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    background: radial-gradient(circle at center, rgb(28, 194, 206) , rgb(34, 54, 116));
+
+}
+
+#loader-box{
+    position: absolute;
+    
+    width: 50px;
+    height: 50px;
+
+    border: 5px solid white;
+    
+}
+
+
+.anime_rotate{
+    animation: rotate_anime 1.5s ease-in-out alternate infinite;
+}
+
+@keyframes rotate_anime{
+    from{height: 10vmin; width:10vmin; transform: rotate(0deg) translateY(0%); opacity: 1}
+    to{height: 120vmin; width: 120vmax; transform: rotate(120deg) translateY(80%); opacity: 0;}
+    
+    /*
+    /*Mobile Devices Doesn't support trnasform Scale
+    0%{transform: scale(100%), rotate(0deg) translateY(0%); opacity: 1}
+    100%{transform: scale(3000%) rotate(120deg) translateY(80%); opacity: 0;}
+    */
+}
+
+#loader-text{
+    position: absolute;
+    
+    color: white;
+    font-family: guerrilla;
+    font-size: 5vmax;
+}
+
+.anime_text{
+    animation: text_anime 1s alternate infinite;
+}
+
+@keyframes text_anime{
+    0%{opacity: 1;}
+    100%{opacity: 0;}
+}
+
+.anime_hidedown{
+    animation: hidedown_anime 1s forwards;
+}
+
+@keyframes hidedown_anime{
+    100%{transform: translateY(100%);opacity: 0}
+}
+
+/*-----Main-----*/
+
+#parent{
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    display: flex;
+    
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    overflow: hidden;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+#backdrop{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    background-image: url(images/bg.jpg);
+    background-repeat: no-repeat;
+
+    background-size: cover;
+    background-position: top;
+
+    /*You Might Wanna Remove This*/
+    transition: filter 0.5s;
+
+    filter: blur(1px);
+}
+
+.exclam{
+    position: absolute;
+    z-index: 2;
+
+    width: 75%;
+    height: 50%;
+
+    object-fit: contain;
+    object-position: bottom;
+
+    opacity: 0;
+
+    display: none;
+
+}
+
+.logo{
+
+    width: 22rem;
+    height: 15rem;
+
+    position: relative;
+    z-index: 1;
+
+    filter: contrast(140%);
+    background-image: url(images/candyCrushlogox2.png);
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.score{
+
+    border: 5px solid rgb(10, 3, 117);
+    border-radius: 10px;
+
+    font-size: 3rem;
+    color: rgb(10, 3, 117);
+    font-family: guerrilla;
+    padding: 10px 20px;
+
+    position: relative;
+    z-index: 1;
+}
+
+
+.grid{
+    /*4px for border*/
+    width: 564px;
+    height: 564px;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    background-color: rgba(70, 110, 230, 0.5);
+
+    border: 2px outset rgba(70, 110, 230, 0.5);
+
+    position: relative;
+    z-index: 1
+}
+
+.grid div{
+    width: 70px;
+    height: 70px;
+    position: relative;
+
+    /*You Could Use Contain But That Would Halt Animations*/
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    cursor: pointer;
+
+    text-align: center;
+}
+
+/*Responsiveness For Mobile Devices*/
+
+@media screen and (max-width: 1100px) and (min-width: 660px){
+
+    #parent{
+        justify-content: center;
+    }
+
+    .logo{
+        width: 20%;
+    }
+
+    .grid{
+        width: 564px;
+        height: 564px;
+    }
+
+    .grid div{
+        width: 70px;
+        height: 70px; 
+    }
+
+    .score{
+        font-size: 4vmax;
+        border: 0px;
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 1100px) and (min-width: 660px) and (orientation: landscape){
+
+
+    .grid{
+        width: 65%;
+        height: 90%;
+    }
+
+    .grid div{
+        width: 12.3%;
+        height: 12.3%; 
+    }
+
+}
+
+
+@media screen and (max-width: 660px){
+    
+    #parent{
+        flex-wrap: nowrap;
+        overflow: visible;
+        justify-content: flex-start;
+    }
+
+    .logo{
+        order: 1;
+        height: 15%;
+        width: 50vw;
+        background-image: url(images/candyCrushlogo.png);
+    }
+
+    .score{
+        border-width: 0px;
+        font-size: 4vmax;
+        margin: 2px 0;
+        order: 3    ;
+    }
+
+    .grid{
+        order: 2;
+        /*width: 484px;
+        height: 484px;*/
+        width: 95%;
+        height: 70%;
+        
+    }
+
+    .grid div{
+        /*width:60px;
+        height: 60px;*/
+        height: 12.3%;
+        width: 12.3%;
+    }
+
+}
